@@ -13,6 +13,13 @@ use Illuminate\Http\Request;
 |
 */
 
+Route::post('/login', 'Auth\LoginController@authenticate');
+Route::post('/register', 'Auth\RegisterController@register');
+
 Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();
+});
+
+Route::group([ 'middleware' => ['jwt']], function() {
+    Route::resource('contacts', 'ContactsController');
 });
